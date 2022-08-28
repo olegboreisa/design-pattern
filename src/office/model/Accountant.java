@@ -1,9 +1,15 @@
 package office.model;
 
-public class Accountant implements Employee {
+public class Accountant extends EmployeeOutfit implements Employee {
 
     @Override
-    public String greetings() {
-        return "Hello, I am love numbers";
+    public void listMyOutfit() {
+        super.listMyOutfit();
     }
+
+    @Override
+    public void greetings() {
+        System.out.println("Hello, I am love numbers");
+    }
+
 }

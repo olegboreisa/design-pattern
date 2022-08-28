@@ -8,7 +8,7 @@ import office.model.SoftwareEngineer;
 
 public class EmployeeFactory {
 
-    public Employee getEmployee(int type) {
+    public Employee assignTask(int type) {
         if (type == 0) {
             return new Accountant();
         } else if (type == 1) {

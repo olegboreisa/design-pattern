@@ -2,7 +2,9 @@ import clothes.Clothes;
 import clothes.Item;
 import clothes.LowerBody;
 import office.EmployeeFactory;
+import office.model.Director;
 import office.model.Employee;
+import newspaper.CompanyNewspaper;
 
 import java.util.List;
 import java.util.Random;
@@ -11,8 +13,11 @@ public class DesignPatternApplication {
 
     private static final int FIRST_NUMBER = 0;
     private static final int LAST_NUMBER = 2;
+    private static final String IT_ARTICLE = "How to deal with Software Engineers?";
+    private static final String GENERAL_ARTICLE = "How to stay awake during a workday?";
 
     private static List<String> issues = List.of("Documents", "General", "Software");
+    private static CompanyNewspaper newspaper = new CompanyNewspaper();
 
     public static void main(String[] args) {
 //        Factory Method Design Pattern (Creational)
@@ -29,6 +34,17 @@ public class DesignPatternApplication {
         Employee employee = factory.assignIssue(issueToSolve);
 
         employee.greetings();
+
+//        Observer (Subscriber) Design Patter
+        System.out.println("Current followers count for newspaper: " + newspaper.getFollowers().size());
+        if (employee instanceof Director) {
+            newspaper.subscribe((Director) employee);
+            System.out.println("Followers count was updated to: " + newspaper.getFollowers().size());
+
+            ((Director) employee).followNewspaper(newspaper);
+            newspaper.upload(IT_ARTICLE);
+            newspaper.upload(GENERAL_ARTICLE);
+        }
 
 //        Composite Design Pattern (Structural)
 //        Composite

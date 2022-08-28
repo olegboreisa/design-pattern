@@ -1,6 +1,7 @@
 import clothes.Clothes;
 import clothes.Item;
 import clothes.LowerBody;
+import credits.AccountFacade;
 import office.EmployeeFactory;
 import office.model.Director;
 import office.model.Employee;
@@ -18,6 +19,7 @@ public class DesignPatternApplication {
 
     private static List<String> issues = List.of("Documents", "General", "Software");
     private static CompanyNewspaper newspaper = new CompanyNewspaper();
+    private static AccountFacade accountFacade = new AccountFacade(1234, 99.00);
 
     public static void main(String[] args) {
 //        Factory Method Design Pattern (Creational)
@@ -30,20 +32,22 @@ public class DesignPatternApplication {
         System.out.println(issueToSolve);
 
         EmployeeFactory factory = new EmployeeFactory();
-
         Employee employee = factory.assignIssue(issueToSolve);
-
         employee.greetings();
 
-//        Observer (Subscriber) Design Patter
+//              Observer (Subscriber) Design Patter
         System.out.println("Current followers count for newspaper: " + newspaper.getFollowers().size());
         if (employee instanceof Director) {
-            newspaper.subscribe((Director) employee);
-            System.out.println("Followers count was updated to: " + newspaper.getFollowers().size());
+//              Facade Design Pattern
 
-            ((Director) employee).followNewspaper(newspaper);
-            newspaper.upload(IT_ARTICLE);
-            newspaper.upload(GENERAL_ARTICLE);
+            if (accountFacade.subscribe()) {
+                newspaper.subscribe((Director) employee);
+                ((Director) employee).followNewspaper(newspaper);
+                System.out.println("Followers count was updated to: " + newspaper.getFollowers().size());
+
+                newspaper.upload(IT_ARTICLE);
+                newspaper.upload(GENERAL_ARTICLE);
+            };
         }
 
 //        Composite Design Pattern (Structural)

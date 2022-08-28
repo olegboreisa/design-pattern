@@ -1,25 +1,32 @@
 import clothes.Clothes;
-import clothes.LowerBody;
 import clothes.Item;
+import clothes.LowerBody;
 import office.EmployeeFactory;
 import office.model.Employee;
 
+import java.util.List;
 import java.util.Random;
 
 public class DesignPatternApplication {
 
     private static final int FIRST_NUMBER = 0;
-    private static final int LAST_NUMBER = 4;
+    private static final int LAST_NUMBER = 2;
+
+    private static List<String> issues = List.of("Documents", "General", "Software");
 
     public static void main(String[] args) {
 //        Factory Method Design Pattern (Creational)
         Random random = new Random();
-        int taskNumber = random.ints(FIRST_NUMBER, LAST_NUMBER)
+        int issueNumber = random.ints(FIRST_NUMBER, LAST_NUMBER)
                 .findFirst()
                 .getAsInt();
 
+        String issueToSolve = issues.get(issueNumber);
+        System.out.println(issueToSolve);
+
         EmployeeFactory factory = new EmployeeFactory();
-        Employee employee = factory.assignTask(taskNumber);
+
+        Employee employee = factory.assignIssue(issueToSolve);
 
         employee.greetings();
 

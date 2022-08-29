@@ -2,7 +2,7 @@ import clothes.Clothes;
 import clothes.Item;
 import clothes.LowerBody;
 import credits.AccountFacade;
-import momento.Article;
+import momento.ArticleState;
 import momento.ArticleHistory;
 import office.EmployeeFactory;
 import office.model.Director;
@@ -20,7 +20,7 @@ public class DesignPatternApplication {
     private static final String GENERAL_ARTICLE = "How to stay awake during a workday?";
     private static final String JOKES_ARTICLE = "Knock knock jokes at work!";
 
-    private static final Article article = new Article();
+    private static final ArticleState articleState = new ArticleState();
     private static final ArticleHistory journalHistory = new ArticleHistory();
 
     private static final Random random = new Random();
@@ -58,20 +58,20 @@ public class DesignPatternApplication {
 
 //  Memento Design Pattern (Behavioural)
     private static String publishArticles() {
-        article.setArticle(IT_ARTICLE);
-        journalHistory.push(article.writeAnArticle());
+        articleState.setArticle(IT_ARTICLE);
+        journalHistory.push(articleState.writeAnArticle());
 
-        article.setArticle(GENERAL_ARTICLE);
-        journalHistory.push(article.writeAnArticle());
+        articleState.setArticle(GENERAL_ARTICLE);
+        journalHistory.push(articleState.writeAnArticle());
 
-        article.setArticle(JOKES_ARTICLE);
-        journalHistory.push(article.writeAnArticle());
+        articleState.setArticle(JOKES_ARTICLE);
+        journalHistory.push(articleState.writeAnArticle());
 
-        article.remove(journalHistory.pop());
+        articleState.undo(journalHistory.pop());
 //        article.remove(journalHistory.pop());
 
-        System.out.println("Last article to read: '" + article.getContent() + "'");
-        return article.getContent();
+        System.out.println("Last article to read: '" + articleState.getContent() + "'");
+        return articleState.getContent();
     }
 
     private static String generateRandomIssue() {

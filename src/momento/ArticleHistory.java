@@ -6,16 +6,16 @@ import java.util.List;
 //Caretaker
 public class ArticleHistory {
 
-    private List<ArticleState> allArticles = new ArrayList<>();
+    private List<ArticleMemento> articleStates = new ArrayList<>();
 
-    public void push(ArticleState state) {
-        allArticles.add(state);
+    public void push(ArticleMemento state) {
+        articleStates.add(state);
     }
 
-    public ArticleState pop() {
-        int lastIndex = allArticles.size() - 2;
-        ArticleState lastState = allArticles.get(lastIndex);
-        allArticles.remove(lastState);
+    public ArticleMemento pop() {
+        int lastIndex = articleStates.size() - 2;
+        ArticleMemento lastState = articleStates.get(lastIndex);
+        articleStates.remove(lastState);
         return lastState;
     }
 }

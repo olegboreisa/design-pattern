@@ -1,16 +1,23 @@
 package momento;
 
-//Memento
+//Originator
 public class ArticleState {
 
-    private final String content;
-
-    public ArticleState(String content) {
-        this.content = content;
-    }
+    private String content;
 
     public String getContent() {
         return content;
     }
 
+    public void setArticle(String article) {
+        this.content = article;
+    }
+
+    public ArticleMemento writeAnArticle() {
+        return new ArticleMemento(content);
+    }
+
+    public void undo(ArticleMemento state) {
+        content = state.getContent();
+    }
 }

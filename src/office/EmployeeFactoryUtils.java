@@ -7,6 +7,7 @@ import chain.SoftwareIssue;
 
 public class EmployeeFactoryUtils {
 
+//  Chain of Responsibility Design Patter (Behavioral)
     public static Chain setEmployeeChain(String issue) {
         Chain chainOne = new SoftwareIssue();
         Chain chainTwo = new DocumentIssue();

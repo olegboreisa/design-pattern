@@ -2,6 +2,8 @@ import clothes.Clothes;
 import clothes.Item;
 import clothes.LowerBody;
 import credits.AccountFacade;
+import momento.Article;
+import momento.ArticleHistory;
 import office.EmployeeFactory;
 import office.model.Director;
 import office.model.Employee;
@@ -14,43 +16,83 @@ public class DesignPatternApplication {
 
     private static final int FIRST_NUMBER = 0;
     private static final int LAST_NUMBER = 2;
-    private static final String IT_ARTICLE = "How to deal with Software Engineers?";
+    private static final String IT_ARTICLE = "How to deal with software engineers?";
     private static final String GENERAL_ARTICLE = "How to stay awake during a workday?";
+    private static final String JOKES_ARTICLE = "Knock knock jokes at work!";
 
-    private static List<String> issues = List.of("Documents", "General", "Software");
-    private static CompanyNewspaper newspaper = new CompanyNewspaper();
-    private static AccountFacade accountFacade = new AccountFacade(1234, 99.00);
+    private static final Article article = new Article();
+    private static final ArticleHistory journalHistory = new ArticleHistory();
+
+    private static final Random random = new Random();
+    private static final List<String> issues = List.of("Documents", "General", "Software");
+    private static final EmployeeFactory factory = new EmployeeFactory();
+
+    private static final CompanyNewspaper newspaper = new CompanyNewspaper();
+    private static final AccountFacade accountFacade = new AccountFacade(1234, 101.00);
+
+    private static final boolean showAdditional = false;
 
     public static void main(String[] args) {
-//        Factory Method Design Pattern (Creational)
-        Random random = new Random();
+        String lastPostedArticle = publishArticles();
+        String issueToSolve = generateRandomIssue();
+        Employee employee = pingEmployee(issueToSolve);
+
+//      Observer (Subscriber) Design Patter (Behavioral)
+        System.out.println("Current followers count for newspaper: " + newspaper.getFollowers().size());
+        if (employee instanceof Director) {
+
+            if (accountFacade.subscribe()) {
+
+                newspaper.subscribe((Director) employee);
+                ((Director) employee).followNewspaper(newspaper);
+                System.out.println("Followers count was updated to: " + newspaper.getFollowers().size());
+
+                newspaper.upload(lastPostedArticle);
+            }
+        }
+
+        if (showAdditional) {
+            additionalPatternDemo();
+        }
+    }
+
+//  Memento Design Pattern (Behavioural)
+    private static String publishArticles() {
+        article.setArticle(IT_ARTICLE);
+        journalHistory.push(article.writeAnArticle());
+
+        article.setArticle(GENERAL_ARTICLE);
+        journalHistory.push(article.writeAnArticle());
+
+        article.setArticle(JOKES_ARTICLE);
+        journalHistory.push(article.writeAnArticle());
+
+        article.remove(journalHistory.pop());
+//        article.remove(journalHistory.pop());
+
+        System.out.println("Last article to read: '" + article.getContent() + "'");
+        return article.getContent();
+    }
+
+    private static String generateRandomIssue() {
         int issueNumber = random.ints(FIRST_NUMBER, LAST_NUMBER)
                 .findFirst()
                 .getAsInt();
 
         String issueToSolve = issues.get(issueNumber);
-        System.out.println(issueToSolve);
+        System.out.println("System generated random issue with in context of: '" + issueToSolve + "'");
+        return issueToSolve;
+    }
 
-        EmployeeFactory factory = new EmployeeFactory();
+//  Factory Method Design Pattern (Creational)
+    private static Employee pingEmployee(String issueToSolve) {
         Employee employee = factory.assignIssue(issueToSolve);
         employee.greetings();
+        return employee;
+    }
 
-//              Observer (Subscriber) Design Patter
-        System.out.println("Current followers count for newspaper: " + newspaper.getFollowers().size());
-        if (employee instanceof Director) {
-//              Facade Design Pattern
-
-            if (accountFacade.subscribe()) {
-                newspaper.subscribe((Director) employee);
-                ((Director) employee).followNewspaper(newspaper);
-                System.out.println("Followers count was updated to: " + newspaper.getFollowers().size());
-
-                newspaper.upload(IT_ARTICLE);
-                newspaper.upload(GENERAL_ARTICLE);
-            };
-        }
-
-//        Composite Design Pattern (Structural)
+//  Composite Design Pattern (Structural)
+    private static void additionalPatternDemo() {
 //        Composite
         LowerBody pants = new LowerBody("Pants");
 
@@ -73,4 +115,5 @@ public class DesignPatternApplication {
         System.out.println("===============================");
         pants.showPrice();
     }
+
 }

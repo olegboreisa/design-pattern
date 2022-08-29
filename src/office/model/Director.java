@@ -10,8 +10,8 @@ public class Director implements Employee, Observer {
 
     @Override
     public void greetings() {
-        System.out.println("Hello, I am a director.\nUnfortunately I do not know how to solve the issue.\n" +
-                "I will subscribe to CompanyNewsPaper.");
+        System.out.println("Hello, I am a director.\nUnfortunately I do not know how to solve the issue. " +
+                "I will subscribe/read to CompanyNewsPaper.");
         this.name = "Tadas";
     }
 

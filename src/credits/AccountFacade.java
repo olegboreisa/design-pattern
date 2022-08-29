@@ -15,6 +15,7 @@ public class AccountFacade {
         this.accountCreditAmount = new AccountCreditAmount();
     }
 
+//  Facade Design Pattern (Structural)
     public boolean subscribe() {
         if (accountCreditPin.validateLogin(enteredPinCode)) {
             return accountCreditAmount.validateSubscription(newsPaperCreditPrice);

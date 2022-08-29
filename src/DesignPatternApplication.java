@@ -68,7 +68,7 @@ public class DesignPatternApplication {
         journalHistory.push(articleState.writeAnArticle());
 
         articleState.undo(journalHistory.pop());
-//        article.remove(journalHistory.pop());
+//        article.undo(journalHistory.pop());
 
         System.out.println("Last article to read: '" + articleState.getContent() + "'");
         return articleState.getContent();

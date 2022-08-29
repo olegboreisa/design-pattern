@@ -3,6 +3,7 @@ package chain;
 import office.model.Director;
 import office.model.Employee;
 
+//Handler
 public class GeneralIssue implements Chain {
 
     private Chain nextInChain;

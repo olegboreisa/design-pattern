@@ -13,7 +13,7 @@ public class ArticleHistory {
     }
 
     public ArticleMemento pop() {
-        int lastIndex = articleStates.size() - 2;
+        int lastIndex = articleStates.size() - 1;
         ArticleMemento lastState = articleStates.get(lastIndex);
         articleStates.remove(lastState);
         return lastState;

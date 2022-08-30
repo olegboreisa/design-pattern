@@ -65,8 +65,6 @@ public class DesignPatternApplication {
         journalHistory.push(articleState.writeAnArticle());
 
         articleState.setArticle(JOKES_ARTICLE);
-        journalHistory.push(articleState.writeAnArticle());
-
         articleState.undo(journalHistory.pop());
 //        article.undo(journalHistory.pop());
 
